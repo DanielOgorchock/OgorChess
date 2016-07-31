@@ -9,11 +9,13 @@ class Coord
     public:
         //ctrs
         Coord();
-        Coord(unsigned char X, unsigned char Y);
+        Coord(short X, short Y);
 
         // the locations can be publically available
-        unsigned char x = 0;
-        unsigned char y = 0;
+        short x = 0;
+        short y = 0;
+
+        friend bool operator==(Coord x, Coord y);
 };
 
 

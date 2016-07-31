@@ -26,8 +26,22 @@ void Piece::refineValidMoves(const Board &board, Coord coord)
     for(Coord c : _validMoves)
     {
         Board* b = new Board(board); 
+        std::cout<<"COPIED\n";
         b->move(coord, c);
+        std::cout<<"MOVED\n";
         b->calcValidMoves();
+        std::cout<<"CALCED\n";
+        b->toggleTurn();
+        std::cout<<"TOGGLED\n";
+        if(!b->isKingInCheck(_isWhite))
+        {
+            _newBoards.push_back(b);
+        }
+        else
+        {
+            delete b;
+        }
+        std::cout<<"LOOP_DONE\n";
     } 
 }
 

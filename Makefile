@@ -14,7 +14,7 @@ all: OgorChess
 OgorChess: ogorchess.o Piece.o Coord.o Board.o
 	$(CC) $(CFLAGS) -o OgorChess ogorchess.o Piece.o Coord.o Board.o Rook.o Knight.o Bishop.o Queen.o King.o Pawn.o
 
-ogorchess.o: src/ogorchess.cpp
+ogorchess.o: src/ogorchess.cpp Board.o
 	$(CC) $(CFLAGS) -c -o ogorchess.o src/ogorchess.cpp
 
 Piece.o: include/Piece.h src/Piece.cpp Coord.o

@@ -10,6 +10,7 @@ class Knight : public Piece
     public:
         //ctr
         Knight(bool isWhite);
+        Knight(const Knight& knight);
 
         virtual void calcValidMoves(const Board& board, Coord coord);
 

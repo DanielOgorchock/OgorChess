@@ -62,16 +62,24 @@ Board::Board(const Board& board)
 {
     clearBoard(); 
 
+    _whiteKing = board._whiteKing->clone();
+    _blackKing = board._blackKing->clone();
     for(unsigned int i = 0; i < BOARD_WIDTH * BOARD_HEIGHT; ++i)
     {
         const Piece* p = board._grid[i];
-        if(!p && p!=board._whiteKing && p!=board._blackKing)
+        if(p && p!=board._whiteKing && p!=board._blackKing)
         {
             _grid[i]=p->clone();
         }
+        else if(p==board._whiteKing)
+        {
+            _grid[i]=_whiteKing;
+        }
+        else if(p==board._blackKing)
+        {
+            _grid[i]=_blackKing;
+        }
     }
-    _whiteKing = board._whiteKing->clone();
-    _blackKing = board._blackKing->clone();
 }
 
 //dtr
@@ -115,6 +123,35 @@ void Board::refineValidMoves()
             _grid[i]->refineValidMoves(*this, Coord(i%BOARD_WIDTH, i/BOARD_WIDTH));
         }
     }
+}
+
+bool Board::isKingInCheck(bool whiteKing)
+{
+    // find the king's coordinate
+    Coord kingCoord;
+    for(unsigned int i = 0; i < BOARD_WIDTH * BOARD_HEIGHT; ++i)
+    {
+        if(_grid[i] == (whiteKing ? _whiteKing : _blackKing))
+        {
+            kingCoord = Coord(i%BOARD_WIDTH, i/BOARD_WIDTH);
+        }
+    }
+
+    for(unsigned int i = 0; i < BOARD_WIDTH * BOARD_HEIGHT; ++i)
+    {
+        Piece* p = _grid[i];
+        if(p && p->isWhite() != whiteKing) //make sure piece is opposite color of king
+        {
+            for(Coord c : p->getValidMoves())
+            {
+                if(c == kingCoord)
+                {
+                    return true;
+                }
+            } 
+        }
+    }
+    return false;
 }
 
 

@@ -17,6 +17,7 @@ class Board
         Piece* _blackKing;
         Coord _lastMoveSrc;
         Coord _lastMoveDest;
+        bool _whiteTurn;
 
         void clearBoard();
 
@@ -27,6 +28,10 @@ class Board
 
         //dtr
         ~Board();
+
+        bool isWhiteTurn() const {return _whiteTurn;}
+        void setIsWhiteTurn(bool b) {_whiteTurn = b;}
+        void toggleTurn() {_whiteTurn = !_whiteTurn;}
 
         const Piece* getPiece(Coord c) const {return _grid[c.y*BOARD_WIDTH + c.x];}
         Piece* getPiece(Coord c) {return _grid[c.y*BOARD_WIDTH + c.x];}             
@@ -40,6 +45,8 @@ class Board
 
         void calcValidMoves();
         void refineValidMoves();
+
+        bool isKingInCheck(bool whiteKing);
 };
 
 

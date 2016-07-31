@@ -10,6 +10,7 @@ class Rook : public Piece
     public:
         //ctr
         Rook(bool isWhite);
+        Rook(const Rook& rook);
 
         virtual void calcValidMoves(const Board& board, Coord coord);
 

@@ -13,9 +13,17 @@ Coord::Coord():
 
 }
 
-Coord::Coord(unsigned char X, unsigned char Y):
+Coord::Coord(short X, short Y):
     x(X),
     y(Y)
 {
 
 }
+
+
+bool operator==(Coord x, Coord y)
+{
+    return x.x == y.x && x.y == y.y;
+}
+
+

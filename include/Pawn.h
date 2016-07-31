@@ -10,6 +10,7 @@ class Pawn : public Piece
     public:
         //ctr
         Pawn(bool isWhite);
+        Pawn(const Pawn& pawn);
 
         virtual void calcValidMoves(const Board& board, Coord coord);
 

@@ -6,6 +6,7 @@
 
 #include "Coord.h"
 #include <vector>
+#include <iostream>
 
 class Board;
 

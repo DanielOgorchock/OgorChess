@@ -10,6 +10,7 @@ class Bishop : public Piece
     public:
         //ctr
         Bishop(bool isWhite);
+        Bishop(const Bishop& bishop);
 
         virtual void calcValidMoves(const Board& board, Coord coord);
 
