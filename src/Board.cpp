@@ -90,6 +90,9 @@ void Board::move(Coord src, Coord dest)
 {
     setPiece(dest, getPiece(src));
     setPiece(src, 0);
+    _lastMoveSrc  = src;
+    _lastMoveDest = dest;
+    getPiece(dest)->handleSpecialCase(*this, src, dest);
 }
 
 void Board::calcValidMoves()
@@ -102,6 +105,18 @@ void Board::calcValidMoves()
         }
     } 
 }
+
+void Board::refineValidMoves()
+{
+    for(unsigned int i = 0; i < BOARD_WIDTH * BOARD_HEIGHT; ++i)
+    {
+        if(_grid[i])
+        {
+            _grid[i]->refineValidMoves(*this, Coord(i%BOARD_WIDTH, i/BOARD_WIDTH));
+        }
+    }
+}
+
 
 
 

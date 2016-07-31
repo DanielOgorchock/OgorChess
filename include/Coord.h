@@ -7,7 +7,8 @@
 class Coord
 {
     public:
-        //ctr
+        //ctrs
+        Coord();
         Coord(unsigned char X, unsigned char Y);
 
         // the locations can be publically available

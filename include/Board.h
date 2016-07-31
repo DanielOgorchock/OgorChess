@@ -4,6 +4,7 @@
 // Class representing the chessboard
 
 #include "Piece.h"
+#include "Coord.h"
 
 class Board
 {
@@ -14,6 +15,8 @@ class Board
         Piece* _grid[BOARD_WIDTH * BOARD_HEIGHT];
         Piece* _whiteKing;
         Piece* _blackKing;
+        Coord _lastMoveSrc;
+        Coord _lastMoveDest;
 
         void clearBoard();
 
@@ -32,7 +35,11 @@ class Board
 
         void move(Coord src, Coord dest);
 
+        const Coord& getLastMoveSrc() const {return _lastMoveSrc;}
+        const Coord& getLastMoveDest() const {return _lastMoveDest;}
+
         void calcValidMoves();
+        void refineValidMoves();
 };
 
 

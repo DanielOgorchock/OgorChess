@@ -13,6 +13,7 @@ class Piece
 {
     private:
         bool _isWhite;
+        char _charRep;
 
     protected:
         // vector of valid coordinates to which this piece can move
@@ -26,7 +27,7 @@ class Piece
 
     public:
         //ctr
-        Piece(bool isWhite);
+        Piece(bool isWhite, char charRep);
 
         //dtr
         virtual ~Piece();
@@ -34,6 +35,8 @@ class Piece
         bool isWhite() const {return _isWhite;}
         
         void setIsWhite(bool b) {_isWhite = b;}
+
+        char getCharRep() const {return _charRep;}
 
         const std::vector<Coord>& getValidMoves() const {return _validMoves;}
 
@@ -46,6 +49,9 @@ class Piece
 
         // Second stage of valid moves calculation (considers putting self in check)
         void refineValidMoves(const Board& board, Coord coord);
+
+        // Base implementation does nothing
+        virtual void handleSpecialCase(Board& board, Coord src, Coord dest);
 
         virtual Piece* clone() const = 0;
 

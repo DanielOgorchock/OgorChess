@@ -8,7 +8,7 @@
 
 //ctr
 King::King(bool isWhite):
-    Piece(isWhite)
+    Piece(isWhite, 'K')
 {
 
 }

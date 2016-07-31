@@ -8,7 +8,7 @@
 
 //ctr
 Pawn::Pawn(bool isWhite):
-    Piece(isWhite)
+    Piece(isWhite, 'P')
 {
 
 }

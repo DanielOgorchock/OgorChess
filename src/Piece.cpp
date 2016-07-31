@@ -7,8 +7,9 @@
 //public
 
 //ctr
-Piece::Piece(bool isWhite):
-    _isWhite(isWhite)
+Piece::Piece(bool isWhite, char charRep):
+    _isWhite(isWhite),
+    _charRep(charRep)
 {
 
 }
@@ -30,6 +31,9 @@ void Piece::refineValidMoves(const Board &board, Coord coord)
     } 
 }
 
-
+void Piece::handleSpecialCase(Board& board, Coord src, Coord dest)
+{
+    // many classes won't need to worry about this, so don't make them all implement it
+}
 
 

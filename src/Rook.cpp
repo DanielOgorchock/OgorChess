@@ -8,7 +8,7 @@
 
 //ctr
 Rook::Rook(bool isWhite):
-    Piece(isWhite)
+    Piece(isWhite, 'R')
 {
 
 }
