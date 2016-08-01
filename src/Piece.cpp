@@ -41,7 +41,7 @@ void Piece::refineValidMoves(const Board &board, Coord coord)
         b->toggleTurn();
         if(!b->isKingInCheck(_isWhite))
         {
-            _newBoards.push_back(b);
+            _newBoards.push_back(std::make_pair(b, Move(coord, c)));
         }
         else
         {

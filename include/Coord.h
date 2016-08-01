@@ -18,5 +18,17 @@ class Coord
         friend bool operator==(Coord x, Coord y);
 };
 
+struct Move
+{
+    Coord src;
+    Coord dest;
+
+    Move(Coord s, Coord d):
+        src(s),
+        dest(d)
+    {
+
+    }
+};
 
 #endif

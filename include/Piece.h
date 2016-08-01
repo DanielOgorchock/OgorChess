@@ -7,6 +7,7 @@
 #include "Coord.h"
 #include <vector>
 #include <iostream>
+#include <utility>
 
 class Board;
 
@@ -36,7 +37,7 @@ class Piece
         // these boards should contain pieces which have all had
         // calculateValidMoves() run on them, but not yet
         // refineValidMoves()
-        std::vector<Board*> _newBoards;
+        std::vector<std::pair<Board*, Move>> _newBoards;
 
     public:
         //ctr
@@ -59,7 +60,7 @@ class Piece
 
         const std::vector<Coord>& getValidMoves() const {return _validMoves;}
 
-        const std::vector<Board*>& getNewBoards() const {return _newBoards;}
+        const std::vector<std::pair<Board*, Move>>& getNewBoards() const {return _newBoards;}
 
         // This calculates the valid moves for this piece
         // Note: this method ignores the possiblity of putting own king in check

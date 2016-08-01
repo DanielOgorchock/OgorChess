@@ -14,6 +14,7 @@ void drawBoard(const Board& board)
     bool ws = true;
     for(unsigned int i = 0; i < 8; ++i)
     {
+        std::cout << i << " ";
         for(unsigned int j = 0; j < 8; ++j)
         {
             std::string square;
@@ -37,7 +38,8 @@ void drawBoard(const Board& board)
         std::cout << std::endl;
         ws = !ws;
     }
-    std::cout << std::endl;
+    std::cout << "   0  1  2  3  4  5  6  7";
+    std::cout << std::endl << std::endl;
 }
 
 void randomGame()
@@ -82,12 +84,12 @@ void randomGame()
         {
             if(i != index)
             {
-                delete newboards[i];
+                delete newboards[i].first;
             }
         }
 
         Board* oldboard = board;
-        board = newboards[index]; 
+        board = newboards[index].first; 
         
         delete oldboard;
 
@@ -96,68 +98,104 @@ void randomGame()
     }
 }
 
+void localGame()
+{
+    bool playerWhite = true;
+
+    srand (time(NULL));
+
+    Board* board = new Board();
+    board->setIsWhiteTurn(true);
+    board->calcValidMoves();
+
+    while(true)
+    {
+        drawBoard(*board);
+
+        board->refineValidMoves();
+        board->populateNewBoards();
+        auto newboards = board->getNewBoards();
+
+        if(newboards.size() == 0)
+        {
+            if(board->isKingInCheck(board->isWhiteTurn()))
+            {
+                std::cout << "CHECKMATE!\n";
+            }
+            else
+            {
+                std::cout << "STALEMATE!\n";
+            }
+            break;
+        }
+
+        if(board->getDrawCount() >= 50)
+        {
+            std::cout << "DRAW!\n";
+            break;
+        }
+
+
+        Coord playerSrc, playerDest;
+        std::cout << "Source x: ";
+        std::cin >> playerSrc.x;
+        std::cout << "Source y: ";
+        std::cin >> playerSrc.y;
+        std::cout << "Destination x: ";
+        std::cin >> playerDest.x;
+        std::cout << "Destination y: ";
+        std::cin >> playerDest.y;
+
+        bool validMove = false;
+        for(auto pair : newboards)
+        {
+            if(pair.second.src == playerSrc && pair.second.dest == playerDest)
+            {
+                validMove = true;
+                board = pair.first; 
+                break;
+            }
+        }
+        if(!validMove)
+        {
+            std::cout << "Invalid Move. YOU LOSE!\n";
+            break;
+        }
+
+        drawBoard(*board);
+        board->refineValidMoves();
+        board->populateNewBoards();
+        newboards = board->getNewBoards();
+
+        if(newboards.size() == 0)
+        {
+            if(board->isKingInCheck(board->isWhiteTurn()))
+            {
+                std::cout << "CHECKMATE!\n";
+            }
+            else
+            {
+                std::cout << "STALEMATE!\n";
+            }
+            break;
+        }
+
+        if(board->getDrawCount() >= 50)
+        {
+            std::cout << "DRAW!\n";
+            break;
+        }
+
+        unsigned int index = rand() % newboards.size();
+
+        board = newboards[index].first; 
+    }
+}
+
 int main(int argn, char *argc[])
 {        
-/*    std::cout<<"Welcome to OgorChess!\n";
-    Board board;
-    board.calcValidMoves();
-    std::cout<<"Valid moves already calculated.\n";
-
-
-    std::cout<<"ROOK: " << board.getPiece(Coord(0,0))->getValidMoves().size() << std::endl;
-    std::cout<<"KNIGHT: " << board.getPiece(Coord(1,0))->getValidMoves().size() << std::endl;
-    std::cout<<"BISHOP: " << board.getPiece(Coord(2,0))->getValidMoves().size() << std::endl;
-    std::cout<<"QUEEN: " << board.getPiece(Coord(3,0))->getValidMoves().size() << std::endl;
-    std::cout<<"KING: " << board.getPiece(Coord(4,0))->getValidMoves().size() << std::endl;
-    std::cout<<"BISHOP: " << board.getPiece(Coord(5,0))->getValidMoves().size() << std::endl;
-    std::cout<<"KNIGHT: " << board.getPiece(Coord(6,0))->getValidMoves().size() << std::endl;
-    std::cout<<"ROOK: " << board.getPiece(Coord(7,0))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(0,1))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(1,1))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(2,1))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(3,1))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(4,1))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(5,1))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(6,1))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(7,1))->getValidMoves().size() << std::endl;
-
-    std::cout<<"ROOK: " << board.getPiece(Coord(0,7))->getValidMoves().size() << std::endl;
-    std::cout<<"KNIGHT: " << board.getPiece(Coord(1,7))->getValidMoves().size() << std::endl;
-    std::cout<<"BISHOP: " << board.getPiece(Coord(2,7))->getValidMoves().size() << std::endl;
-    std::cout<<"QUEEN: " << board.getPiece(Coord(3,7))->getValidMoves().size() << std::endl;
-    std::cout<<"KING: " << board.getPiece(Coord(4,7))->getValidMoves().size() << std::endl;
-    std::cout<<"BISHOP: " << board.getPiece(Coord(5,7))->getValidMoves().size() << std::endl;
-    std::cout<<"KNIGHT: " << board.getPiece(Coord(6,7))->getValidMoves().size() << std::endl;
-    std::cout<<"ROOK: " << board.getPiece(Coord(7,7))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(0,6))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(1,6))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(2,6))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(3,6))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(4,6))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(5,6))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(6,6))->getValidMoves().size() << std::endl;
-    std::cout<<"PAWN: " << board.getPiece(Coord(7,6))->getValidMoves().size() << std::endl;
-
-    drawBoard(board);
-
-    board.refineValidMoves();
-
-    for(unsigned int i = 0; i < 8; ++i)
-    {
-        for(unsigned int j = 0; j < 8; ++j)
-        {
-            const Piece* p = board.getPiece(Coord(j,i));
-            if(p)
-            {
-                for(const Board* b : p->getNewBoards())
-                {
-                    drawBoard(*b);
-                }
-            }  
-        }
-    }
-*/
-    randomGame();
+    //randomGame();
+    localGame();
 
     return 0;
 }

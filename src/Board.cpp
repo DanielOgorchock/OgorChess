@@ -130,7 +130,7 @@ void Board::refineValidMoves()
 {
     for(unsigned int i = 0; i < BOARD_WIDTH * BOARD_HEIGHT; ++i)
     {
-        if(_grid[i])
+        if(_grid[i] && _grid[i]->isWhite() == _whiteTurn)
         {
             _grid[i]->refineValidMoves(*this, Coord(i%BOARD_WIDTH, i/BOARD_WIDTH));
         }
@@ -144,9 +144,9 @@ void Board::populateNewBoards()
         Piece* p = _grid[i];
         if(p && p->isWhite() == isWhiteTurn())
         {
-            for(Board* b : p->getNewBoards())
+            for(auto pair : p->getNewBoards())
             {
-                _newBoards.push_back(b);
+                _newBoards.push_back(std::make_pair(pair.first, pair.second));
             }
         }
     }
