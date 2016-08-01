@@ -9,20 +9,20 @@
 
 //ctr
 Bishop::Bishop(bool isWhite):
-    Piece(isWhite, 'B')
+    Piece(isWhite, 'B', Piece::BISHOP)
 {
 
 }
 
 Bishop::Bishop(const Bishop& bishop):
-    Piece(bishop.isWhite(), 'B')
+    Piece(bishop)
 {
 
 }
 
 void Bishop::calcValidMoves(const Board &board, Coord coord)
 {
-    std::cout << "Bishop\n";
+   // std::cout << "Bishop\n";
 
     _validMoves.clear();
     Coord crawler;

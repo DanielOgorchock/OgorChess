@@ -16,6 +16,7 @@ class Pawn : public Piece
 
         virtual Piece* clone() const;
 
+        virtual void handleSpecialCase(Board& board, Coord src, Coord dest);
 };
 
 

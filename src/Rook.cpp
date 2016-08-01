@@ -9,20 +9,20 @@
 
 //ctr
 Rook::Rook(bool isWhite):
-    Piece(isWhite, 'R')
+    Piece(isWhite, 'R', Piece::ROOK)
 {
 
 }
 
 Rook::Rook(const Rook& rook):
-    Piece(rook.isWhite(), 'R')
+    Piece(rook)
 {
 
 }
 
 void Rook::calcValidMoves(const Board &board, Coord coord)
 {
-    std::cout << "Rook\n";
+//    std::cout << "Rook\n";
 
     _validMoves.clear();
     Coord crawler;

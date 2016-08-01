@@ -58,7 +58,9 @@ Board::Board()
     _blackKing = getPiece(Coord(4, 0));
 }
 
-Board::Board(const Board& board)
+Board::Board(const Board& board):
+    _whiteTurn(board._whiteTurn),
+    _drawCount(board._drawCount)
 {
     clearBoard(); 
 
@@ -96,11 +98,21 @@ Board::~Board()
 
 void Board::move(Coord src, Coord dest)
 {
+    if(getPiece(src)->getType() == Piece::PAWN
+            || getPiece(dest))
+    {
+        _drawCount = 0;
+    }
+    else
+    {
+        ++_drawCount;
+    }
     setPiece(dest, getPiece(src));
     setPiece(src, 0);
     _lastMoveSrc  = src;
     _lastMoveDest = dest;
     getPiece(dest)->handleSpecialCase(*this, src, dest);
+    getPiece(dest)->setHasMoved(true); 
 }
 
 void Board::calcValidMoves()
@@ -121,6 +133,21 @@ void Board::refineValidMoves()
         if(_grid[i])
         {
             _grid[i]->refineValidMoves(*this, Coord(i%BOARD_WIDTH, i/BOARD_WIDTH));
+        }
+    }
+}
+
+void Board::populateNewBoards()
+{
+    for(unsigned int i = 0; i < BOARD_WIDTH * BOARD_HEIGHT; ++i)
+    {
+        Piece* p = _grid[i];
+        if(p && p->isWhite() == isWhiteTurn())
+        {
+            for(Board* b : p->getNewBoards())
+            {
+                _newBoards.push_back(b);
+            }
         }
     }
 }

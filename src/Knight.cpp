@@ -9,20 +9,20 @@
 
 //ctr
 Knight::Knight(bool isWhite):
-    Piece(isWhite, 'N')
+    Piece(isWhite, 'N', Piece::KNIGHT)
 {
 
 }
 
 Knight::Knight(const Knight& knight):
-    Piece(knight.isWhite(), 'N')
+    Piece(knight)
 {
 
 }
 
 void Knight::calcValidMoves(const Board &board, Coord coord)
 {
-    std::cout << "Knight\n";
+//    std::cout << "Knight\n";
 
     _validMoves.clear();
 

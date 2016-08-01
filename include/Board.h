@@ -5,6 +5,7 @@
 
 #include "Piece.h"
 #include "Coord.h"
+#include <vector>
 
 class Board
 {
@@ -18,6 +19,8 @@ class Board
         Coord _lastMoveSrc;
         Coord _lastMoveDest;
         bool _whiteTurn;
+        std::vector<Board*> _newBoards;
+        unsigned long _drawCount = 0;
 
         void clearBoard();
 
@@ -43,10 +46,18 @@ class Board
         const Coord& getLastMoveSrc() const {return _lastMoveSrc;}
         const Coord& getLastMoveDest() const {return _lastMoveDest;}
 
+        unsigned long getDrawCount() const {return _drawCount;}
+
         void calcValidMoves();
         void refineValidMoves();
+        
+        void populateNewBoards();
+
+        const std::vector<Board*>& getNewBoards() const {return _newBoards;}
+        std::vector<Board*>& getNewBoards() {return _newBoards;}
 
         bool isKingInCheck(bool whiteKing);
+
 };
 
 

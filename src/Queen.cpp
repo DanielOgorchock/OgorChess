@@ -9,20 +9,20 @@
 
 //ctr
 Queen::Queen(bool isWhite):
-    Piece(isWhite, 'Q')
+    Piece(isWhite, 'Q', Piece::QUEEN)
 {
 
 }
 
 Queen::Queen(const Queen& queen):
-    Piece(queen.isWhite(), 'Q')
+    Piece(queen)
 {
 
 }
 
 void Queen::calcValidMoves(const Board &board, Coord coord)
 {
-    std::cout << "Queen\n";
+    //std::cout << "Queen\n";
 
     _validMoves.clear();
 

@@ -12,9 +12,21 @@ class Board;
 
 class Piece
 {
+    public:
+        enum Type{
+            PAWN,
+            ROOK,
+            KNIGHT,
+            BISHOP,
+            QUEEN,
+            KING
+        };
+
     private:
         bool _isWhite;
         char _charRep;
+        Type _type;
+        bool _hasMoved;
 
     protected:
         // vector of valid coordinates to which this piece can move
@@ -28,7 +40,8 @@ class Piece
 
     public:
         //ctr
-        Piece(bool isWhite, char charRep);
+        Piece(bool isWhite, char charRep, Type type);
+        Piece(const Piece& piece);
 
         //dtr
         virtual ~Piece();
@@ -38,6 +51,11 @@ class Piece
         void setIsWhite(bool b) {_isWhite = b;}
 
         char getCharRep() const {return _charRep;}
+
+        Type getType() const {return _type;}
+
+        bool hasMoved() const {return _hasMoved;}
+        void setHasMoved(bool b) {_hasMoved = b;}
 
         const std::vector<Coord>& getValidMoves() const {return _validMoves;}
 
