@@ -28,6 +28,7 @@ class Piece
         char _charRep;
         Type _type;
         bool _hasMoved;
+        int _value;
 
     protected:
         // vector of valid coordinates to which this piece can move
@@ -41,7 +42,7 @@ class Piece
 
     public:
         //ctr
-        Piece(bool isWhite, char charRep, Type type);
+        Piece(bool isWhite, char charRep, Type type, int value);
         Piece(const Piece& piece);
 
         //dtr
@@ -54,6 +55,8 @@ class Piece
         char getCharRep() const {return _charRep;}
 
         Type getType() const {return _type;}
+
+        int getValue() const {return _value;}
 
         bool hasMoved() const {return _hasMoved;}
         void setHasMoved(bool b) {_hasMoved = b;}

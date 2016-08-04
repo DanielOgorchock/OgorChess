@@ -9,7 +9,7 @@
 
 //ctr
 Bishop::Bishop(bool isWhite):
-    Piece(isWhite, 'B', Piece::BISHOP)
+    Piece(isWhite, 'B', Piece::BISHOP, 3)
 {
 
 }

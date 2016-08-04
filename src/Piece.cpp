@@ -7,11 +7,12 @@
 //public
 
 //ctr
-Piece::Piece(bool isWhite, char charRep, Type type):
+Piece::Piece(bool isWhite, char charRep, Type type, int value):
     _isWhite(isWhite),
     _charRep(charRep),
     _type(type),
-    _hasMoved(false)
+    _hasMoved(false),
+    _value(value)
 {
 
 }
@@ -19,7 +20,8 @@ Piece::Piece(const Piece& piece):
     _isWhite(piece._isWhite),
     _charRep(piece._charRep),
     _type(piece._type),
-    _hasMoved(piece._hasMoved)
+    _hasMoved(piece._hasMoved),
+    _value(piece._value)
 {
 
 }

@@ -9,7 +9,7 @@
 
 //ctr
 Queen::Queen(bool isWhite):
-    Piece(isWhite, 'Q', Piece::QUEEN)
+    Piece(isWhite, 'Q', Piece::QUEEN, 9)
 {
 
 }

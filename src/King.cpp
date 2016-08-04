@@ -9,7 +9,7 @@
 
 //ctr
 King::King(bool isWhite):
-    Piece(isWhite, 'K', Piece::KING)
+    Piece(isWhite, 'K', Piece::KING, 1000000)
 {
 
 }

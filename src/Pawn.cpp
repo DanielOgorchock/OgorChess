@@ -11,7 +11,7 @@
 
 //ctr
 Pawn::Pawn(bool isWhite):
-    Piece(isWhite, 'P', Piece::PAWN)
+    Piece(isWhite, 'P', Piece::PAWN, 1)
 {
 
 }

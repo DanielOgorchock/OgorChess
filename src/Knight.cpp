@@ -9,7 +9,7 @@
 
 //ctr
 Knight::Knight(bool isWhite):
-    Piece(isWhite, 'N', Piece::KNIGHT)
+    Piece(isWhite, 'N', Piece::KNIGHT, 3)
 {
 
 }
