@@ -26,4 +26,17 @@ bool operator==(Coord x, Coord y)
     return x.x == y.x && x.y == y.y;
 }
 
+bool operator!=(Coord x, Coord y)
+{
+    return !(x == y);
+}
 
+bool operator==(Move x, Move y)
+{
+    return x.src == y.src && x.dest == y.dest;
+}
+
+bool operator!=(Move x, Move y)
+{
+    return !(x == y);
+}

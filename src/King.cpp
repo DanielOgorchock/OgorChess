@@ -156,9 +156,11 @@ void King::calcValidMoves(const Board &board, Coord coord)
                         {
                             _validMoves.push_back(crawler);
                         }
+                        c->deletePieceBoards();
                         delete c;
                     } 
                 }
+                b->deletePieceBoards();
                 delete b;
             }
         } 
@@ -189,9 +191,11 @@ void King::calcValidMoves(const Board &board, Coord coord)
                                 _validMoves.push_back(crawler);
                             }
                         }
+                        c->deletePieceBoards();
                         delete c;
                     } 
                 }
+                b->deletePieceBoards();
                 delete b;
             }
         } 
@@ -225,9 +229,11 @@ void King::calcValidMoves(const Board &board, Coord coord)
                         {
                             _validMoves.push_back(crawler);
                         }
+                        c->deletePieceBoards();
                         delete c;
                     } 
                 }
+                b->deletePieceBoards();
                 delete b;
             }
         } 
@@ -258,9 +264,11 @@ void King::calcValidMoves(const Board &board, Coord coord)
                                 _validMoves.push_back(crawler);
                             }
                         }
+                        c->deletePieceBoards();
                         delete c;
                     } 
                 }
+                b->deletePieceBoards();
                 delete b;
             }
         } 

@@ -7,7 +7,7 @@
 //public
 
 //ctr
-Piece::Piece(bool isWhite, char charRep, Type type, int value):
+Piece::Piece(bool isWhite, char charRep, Type type, float value):
     _isWhite(isWhite),
     _charRep(charRep),
     _type(type),
@@ -52,9 +52,29 @@ void Piece::refineValidMoves(const Board &board, Coord coord)
     } 
 }
 
+bool Piece::hasRefinedMove(Coord c)
+{
+    for(auto pair : _newBoards)
+    {
+        if(pair.second.dest == c)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Piece::handleSpecialCase(Board& board, Coord src, Coord dest)
 {
     // many classes won't need to worry about this, so don't make them all implement it
 }
 
+void Piece::deleteBoards()
+{
+    for(auto b : _newBoards)
+    {
+        delete b.first;
+    }
+    _newBoards.clear();
+}
 

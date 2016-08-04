@@ -11,11 +11,14 @@ default: OgorChess
 
 all: OgorChess
 
-OgorChess: ogorchess.o Piece.o Coord.o Board.o
-	$(CC) $(CFLAGS) -o OgorChess ogorchess.o Piece.o Coord.o Board.o Rook.o Knight.o Bishop.o Queen.o King.o Pawn.o
+OgorChess: ogorchess.o Piece.o Coord.o Board.o Engine.o
+	$(CC) $(CFLAGS) -o OgorChess ogorchess.o Piece.o Coord.o Board.o Rook.o Knight.o Bishop.o Queen.o King.o Pawn.o Engine.o
 
-ogorchess.o: src/ogorchess.cpp Board.o
+ogorchess.o: src/ogorchess.cpp Board.o Engine.o
 	$(CC) $(CFLAGS) -c -o ogorchess.o src/ogorchess.cpp
+
+Engine.o: include/Engine.h src/Engine.cpp Piece.o Coord.o Board.o Rook.o Knight.o Bishop.o Queen.o King.o Pawn.o
+	$(CC) $(CFLAGS) -c -o Engine.o src/Engine.cpp
 
 Piece.o: include/Piece.h src/Piece.cpp Coord.o
 	$(CC) $(CFLAGS) -c -o Piece.o src/Piece.cpp

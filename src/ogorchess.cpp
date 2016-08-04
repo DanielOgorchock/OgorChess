@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
+#include <Engine.h>
 
 typedef websocketpp::client<websocketpp::config::core> WsClient;
 
@@ -100,7 +101,7 @@ void randomGame()
 
 void localGame()
 {
-    bool playerWhite = true;
+//    bool playerWhite = true;
 
     srand (time(NULL));
 
@@ -192,10 +193,63 @@ void localGame()
     }
 }
 
+bool isGameOver(const Board* board)
+{
+    auto newboards = board->getNewBoards();
+    if(newboards.size() == 0)
+    {
+        if(board->isKingInCheck(board->isWhiteTurn()))
+        {
+            std::cout << "CHECKMATE!\n";
+        }
+        else
+        {
+            std::cout << "STALEMATE!\n";
+        }
+        return true;
+    }
+
+    if(board->getDrawCount() >= 50)
+    {
+        std::cout << "DRAW!\n";
+        return true;
+    }
+    return false;
+}
+
+void playSelf()
+{
+    Engine white(true);
+    Engine black(false);
+    int num = 0;
+
+    while(true)
+    {
+        black.giveMove(white.yourMove());
+        drawBoard(*white.getCurrentBoard());
+        std::cout << ++num << std::endl << std::endl;
+
+        if(isGameOver(white.getCurrentBoard()))
+        {
+            break;
+        }
+
+        white.giveMove(black.yourMove());
+        drawBoard(*black.getCurrentBoard());
+        std::cout << ++num << std::endl << std::endl;
+
+        if(isGameOver(white.getCurrentBoard()))
+        {
+            break;
+        }
+    }
+}
+
 int main(int argn, char *argc[])
 {        
     //randomGame();
-    localGame();
+    //localGame();
+    playSelf();
 
     return 0;
 }

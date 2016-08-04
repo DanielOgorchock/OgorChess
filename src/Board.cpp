@@ -60,7 +60,8 @@ Board::Board()
 
 Board::Board(const Board& board):
     _whiteTurn(board._whiteTurn),
-    _drawCount(board._drawCount)
+    _drawCount(board._drawCount),
+    _value(board._value)
 {
     clearBoard(); 
 
@@ -107,6 +108,11 @@ void Board::move(Coord src, Coord dest)
     {
         ++_drawCount;
     }
+    if(getPiece(dest))
+    {
+        getPiece(dest)->deleteBoards();
+        delete getPiece(dest);
+    }
     setPiece(dest, getPiece(src));
     setPiece(src, 0);
     _lastMoveSrc  = src;
@@ -152,7 +158,7 @@ void Board::populateNewBoards()
     }
 }
 
-bool Board::isKingInCheck(bool whiteKing)
+bool Board::isKingInCheck (bool whiteKing) const
 {
     // find the king's coordinate
     Coord kingCoord;
@@ -181,6 +187,86 @@ bool Board::isKingInCheck(bool whiteKing)
     return false;
 }
 
+void Board::calcValue()
+{
+    _value = 0;
 
+    for(unsigned int i = 0; i < BOARD_WIDTH * BOARD_HEIGHT; ++i)
+    {
+        Piece* p = _grid[i];
+        if(p)
+        {
+            // Simple calculation of piece type values
+           /* if(p->isWhite() && p->getType() != Piece::KING)
+            {
+                _value += p->getValue();
+            }
+            else if(p->getType() != Piece::KING)
+            {
+                _value -= p->getValue();
+            }
+*/
+            // Control of center
+            if(p->hasRefinedMove(Coord(3,4)))
+            {
+                if(p->isWhite())
+                {
+                    _value += 1;
+                }
+                /*else
+                {
+                    _value -= 1;
+                }*/
+            }/*
+            if(p->hasRefinedMove(Coord(3,3)))
+            {
+                if(p->isWhite())
+                {
+                    _value += 10;
+                }
+                else
+                {
+                    _value -= 10;
+                }
+            }
+            if(p->hasRefinedMove(Coord(4,4)))
+            {
+                if(p->isWhite())
+                {
+                    _value += 10;
+                }
+                else
+                {
+                    _value -= 10;
+                }
+            }
+            if(p->hasRefinedMove(Coord(4,3)))
+            {
+                if(p->isWhite())
+                {
+                    _value += 10;
+                }
+                else
+                {
+                    _value -= 10;
+                }
+            }
+*/
+
+        }
+    }
+}
+
+
+void Board::deletePieceBoards()
+{
+    for(unsigned int i = 0; i < BOARD_WIDTH * BOARD_HEIGHT; ++i)
+    {
+        if(_grid[i])
+        {
+            _grid[i]->deleteBoards();
+        }
+    }
+}
 
 

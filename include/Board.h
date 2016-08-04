@@ -22,6 +22,7 @@ class Board
         bool _whiteTurn;
         std::vector<std::pair<Board*, Move>> _newBoards;
         unsigned long _drawCount = 0;
+        float _value;
 
         void clearBoard();
 
@@ -57,7 +58,12 @@ class Board
         const std::vector<std::pair<Board*, Move>>& getNewBoards() const {return _newBoards;}
         std::vector<std::pair<Board*, Move>>& getNewBoards() {return _newBoards;}
 
-        bool isKingInCheck(bool whiteKing);
+        bool isKingInCheck (bool whiteKing) const;
+
+        float getValue() const {return _value;}
+        void calcValue(); //value is always calculated in white's POV
+
+        void deletePieceBoards();
 
 };
 

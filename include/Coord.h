@@ -16,6 +16,7 @@ class Coord
         short y = 0;
 
         friend bool operator==(Coord x, Coord y);
+        friend bool operator!=(Coord x, Coord y);
 };
 
 struct Move
@@ -29,6 +30,10 @@ struct Move
     {
 
     }
+
+
+    friend bool operator==(Move x, Move y);
+    friend bool operator!=(Move x, Move y);
 };
 
 #endif

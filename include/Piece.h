@@ -28,7 +28,7 @@ class Piece
         char _charRep;
         Type _type;
         bool _hasMoved;
-        int _value;
+        float _value;
 
     protected:
         // vector of valid coordinates to which this piece can move
@@ -42,7 +42,7 @@ class Piece
 
     public:
         //ctr
-        Piece(bool isWhite, char charRep, Type type, int value);
+        Piece(bool isWhite, char charRep, Type type, float value);
         Piece(const Piece& piece);
 
         //dtr
@@ -56,7 +56,7 @@ class Piece
 
         Type getType() const {return _type;}
 
-        int getValue() const {return _value;}
+        float getValue() const {return _value;}
 
         bool hasMoved() const {return _hasMoved;}
         void setHasMoved(bool b) {_hasMoved = b;}
@@ -73,12 +73,14 @@ class Piece
         // Second stage of valid moves calculation (considers putting self in check)
         void refineValidMoves(const Board& board, Coord coord);
 
+        bool hasRefinedMove(Coord c);
+
         // Base implementation does nothing
         virtual void handleSpecialCase(Board& board, Coord src, Coord dest);
 
         virtual Piece* clone() const = 0;
 
-
+        void deleteBoards();
 
 };
 
